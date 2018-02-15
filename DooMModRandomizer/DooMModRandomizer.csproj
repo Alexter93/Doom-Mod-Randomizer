@@ -58,6 +58,12 @@
     <Compile Include="frmEditList.Designer.cs">
       <DependentUpon>frmEditList.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmNewMod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNewMod.Designer.cs">
+      <DependentUpon>frmNewMod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mod.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +72,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditList.resx">
       <DependentUpon>frmEditList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNewMod.resx">
+      <DependentUpon>frmNewMod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

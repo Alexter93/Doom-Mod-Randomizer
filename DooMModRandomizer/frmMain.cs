@@ -32,11 +32,15 @@ namespace WindowsFormsApplication1
             using(StreamReader dataReader = File.OpenText("modData.txt"))
             {
                 string fileString;
+                string EXEString;
+                string IWADString;
                 while (!dataReader.EndOfStream)
                 {
                     fileString = dataReader.ReadLine().ToString();
+                    EXEString = dataReader.ReadLine().ToString();
+                    IWADString = dataReader.ReadLine().ToString();
                     //MessageBox.Show("Found: \"" + fileString + "\" found in ./modData.txt");
-                    modList.Add(new Mod(fileString));
+                    modList.Add(new Mod(EXEString, fileString, IWADString));
                 }
             }
                      
@@ -53,13 +57,14 @@ namespace WindowsFormsApplication1
             {
                 Mod selectedMod = modList.ElementAt(rando.Next(modList.Count));
                 ProcessStartInfo launchInfo = new ProcessStartInfo();
-                launchInfo.FileName = selectedMod.getExe();
+                launchInfo.FileName = selectedMod.getExeFile();
                 launchInfo.Arguments = selectedMod.GetArgument();
 
                 try
                 {
                     using (Process launchProcess = Process.Start(launchInfo))
                     {
+                        MessageBox.Show(launchInfo.ToString());
                         launchProcess.WaitForExit();
                     }
                 }
@@ -74,7 +79,7 @@ namespace WindowsFormsApplication1
         // opens a file browser to select a mod to add to the list
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            OpenFileDialog modFile = new OpenFileDialog();
+            /*OpenFileDialog modFile = new OpenFileDialog();
             modFile.Filter = "Wad files (*.wad)|*wad|PK3 files (*.pk3)|*.pk3|Zip files (*.zip)|*.zip|Rar files (*.rar)|*.rar|All files (*.*)|*.*";
             if (modFile.ShowDialog() == DialogResult.OK)
             {
@@ -93,14 +98,31 @@ namespace WindowsFormsApplication1
                     lstMods.DataSource = null;
                 lstMods.DataSource = modList;
                 //dataSaver.Close();
+            }*/
 
+            // save the mod to the txt file
+            frmNewMod addModForm = new frmNewMod(ref modList);
+            addModForm.ShowDialog();
+
+            using (StreamWriter dataSaver = File.CreateText("modData.txt"))
+            {
+                for (int i = 0; i < modList.Count(); i++)
+                {
+                    dataSaver.WriteLine(modList.ElementAt(i).getModFile());
+                    dataSaver.WriteLine(modList.ElementAt(i).getExeFile());
+                    dataSaver.WriteLine(modList.ElementAt(i).getIWadFile());
+                }
             }
+
+            lstMods.DataSource = null;
+            lstMods.DataSource = modList;
         }
 
+        // opens the edit window
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            frmEditList deleteModForm = new frmEditList(ref modList);
-            deleteModForm.ShowDialog();
+            frmEditList editModForm = new frmEditList(ref modList);
+            editModForm.ShowDialog();
 
             /* dataSaver = new StreamWriter("modData.txt", false);
 
@@ -111,9 +133,14 @@ namespace WindowsFormsApplication1
 
             using (StreamWriter dataSaver = File.CreateText("modData.txt"))
             {
+                if (!File.Exists("modData.txt"))
+                    File.WriteAllText("modData.txt", String.Empty);
+
                 for (int i = 0; i < modList.Count(); i++)
                 {
                     dataSaver.WriteLine(modList.ElementAt(i).getModFile());
+                    dataSaver.WriteLine(modList.ElementAt(i).getExeFile());
+                    dataSaver.WriteLine(modList.ElementAt(i).getIWadFile());
                 }
             }
 

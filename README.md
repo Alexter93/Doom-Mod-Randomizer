@@ -1,4 +1,2 @@
 # Doom-Mod-Randomizer
-A simple program that starts the classic 1993 PC game with a random mod (game and mods not included). You will have to modify the code in the current build to match the file paths to your iWad and source port. After that, the porgram is user friendly, and it will be even more so in the future. Also the Mods you select are saved after terminating the program and reloaded upon startup.
-## Instructions
-Before you add your mods and play you have to modify the code in the mod.cs file and adjust the file paths to your source port of choice and your iWad for your choice. The next stage in development is to add that feature in the GUI. Click the "Add Mod" button and select the mod file you wish to add to the list. Once you have at least on mod on the list, you may click the "DooM" button to play a mod on the list. You may remove mods form the list by clicking "Edit Mod List" and clicking the mod you want to delete and yes in the following prompt.
+A simple program that starts the classic 1993 PC game with a random mod (game and mods not included)
